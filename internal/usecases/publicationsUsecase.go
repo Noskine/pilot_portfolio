@@ -25,6 +25,7 @@ func (pu *PublicationUsecase) CreatePublicationsUseCase(dtos *dto.DTORequestPepp
 		Title:     dtos.Title,
 		Text:      dtos.Text,
 		Author:    dtos.Author,
+		Image:     dtos.Image,
 		Create_at: time.Now(),
 	}
 

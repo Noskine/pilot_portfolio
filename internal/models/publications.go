@@ -11,6 +11,7 @@ type Publications struct {
 	Title     string
 	Text      string
 	Author    string
+	Image     string
 	Like      int
 	Create_at time.Time
 }
