@@ -12,7 +12,8 @@ func main() {
 	port := config.NewEnvironments().GetPort()
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("POST /", handler.PublicationsHandler)
+	mux.HandleFunc("POST /", handler.CreatePublicationsHandler)
+	mux.HandleFunc("GET /api/publications", handler.GetAllPublicationHandler)
 
 	log.Printf("Server is Runnign... Port => %s \n", port)
 	if err := http.ListenAndServe(port, mux); err != nil {
