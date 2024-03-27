@@ -30,3 +30,13 @@ func (pr *PublicationRepository) FindAll() (*[]models.Publications, error) {
 
 	return pub, nil
 }
+
+func (pr *PublicationRepository) FindById(id string) (models.Publications, error) {
+	var pub models.Publications
+
+	if result := pr.Db.First(&pub, "id = ?", id); result.Error != nil {
+		return models.Publications{}, result.Error
+	}
+
+	return pub, nil
+}

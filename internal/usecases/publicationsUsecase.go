@@ -1,6 +1,8 @@
 package usecases
 
 import (
+	"log"
+
 	"github.com/noskine/pilot_api/internal/models"
 	"github.com/noskine/pilot_api/internal/repository"
 	"github.com/noskine/pilot_api/pkg/dto"
@@ -46,6 +48,19 @@ func (pu *PublicationUsecase) GetAllPublicationsUseCase() (*[]models.Publication
 
 	if err != nil {
 		return nil, err
+	}
+	return result, nil
+}
+
+func (pu *PublicationUsecase) FindByIdPublicationsUseCase(id string) (models.Publications, error) {
+	connect := repository.Connecting()
+
+	result, err := connect.FindById(id)
+
+	log.Println(result)
+
+	if err != nil {
+		return result, err
 	}
 
 	return result, nil

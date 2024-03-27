@@ -14,6 +14,7 @@ func main() {
 
 	mux.HandleFunc("POST /", handler.CreatePublicationsHandler)
 	mux.HandleFunc("GET /api/publications", handler.GetAllPublicationHandler)
+	mux.HandleFunc("GET /api/publications/by", handler.FindByIdPublicationHandler)
 
 	log.Printf("Server is Runnign... Port => %s \n", port)
 	if err := http.ListenAndServe(port, mux); err != nil {

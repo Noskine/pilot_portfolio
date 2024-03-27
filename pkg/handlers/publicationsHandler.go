@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/go-playground/validator"
@@ -51,6 +52,29 @@ func GetAllPublicationHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(getAll); err != nil {
+		http.Error(w, fmt.Sprintln("Encoder Error"), http.StatusBadRequest)
+		return
+	}
+}
+
+func FindByIdPublicationHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+
+	log.Println(id)
+
+	if id == "" {
+		http.Error(w, fmt.Sprintln("Error Params"), http.StatusBadRequest)
+	}
+
+	find, err := usecases.NewPublicationsUseCase().FindByIdPublicationsUseCase(id)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, fmt.Sprintln("Error Internal"), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(find); err != nil {
 		http.Error(w, fmt.Sprintln("Encoder Error"), http.StatusBadRequest)
 		return
 	}
