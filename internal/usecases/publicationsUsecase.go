@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"time"
+	"log"
 
 	"github.com/noskine/pilot_api/internal/models"
 	"github.com/noskine/pilot_api/internal/repository"
@@ -22,10 +22,10 @@ func (pu *PublicationUsecase) CreatePublicationsUseCase(dtos *dto.DTORequestPepp
 	connect := repository.Connecting()
 
 	pu.Entity = &models.Publications{
-		Title:     dtos.Title,
-		Text:      dtos.Text,
-		Author:    dtos.Author,
-		Create_at: time.Now(),
+		Title:  dtos.Title,
+		Text:   dtos.Text,
+		Author: dtos.Author,
+		Image:  dtos.Image,
 	}
 
 	if err := connect.Create(pu.Entity); err != nil {
@@ -36,6 +36,31 @@ func (pu *PublicationUsecase) CreatePublicationsUseCase(dtos *dto.DTORequestPepp
 
 	if err != nil {
 		return nil, err
+	}
+
+	return result, nil
+}
+
+func (pu *PublicationUsecase) GetAllPublicationsUseCase() (*[]models.Publications, error) {
+	connect := repository.Connecting()
+
+	result, err := connect.FindAll()
+
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (pu *PublicationUsecase) FindByIdPublicationsUseCase(id string) (models.Publications, error) {
+	connect := repository.Connecting()
+
+	result, err := connect.FindById(id)
+
+	log.Println(result)
+
+	if err != nil {
+		return result, err
 	}
 
 	return result, nil
