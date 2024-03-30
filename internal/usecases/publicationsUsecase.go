@@ -2,7 +2,9 @@ package usecases
 
 import (
 	"log"
+	"time"
 
+	"github.com/google/uuid"
 	"github.com/noskine/pilot_api/internal/models"
 	"github.com/noskine/pilot_api/internal/repository"
 	"github.com/noskine/pilot_api/pkg/dto"
@@ -22,10 +24,14 @@ func (pu *PublicationUsecase) CreatePublicationsUseCase(dtos *dto.DTORequestPepp
 	connect := repository.Connecting()
 
 	pu.Entity = &models.Publications{
-		Title:  dtos.Title,
-		Text:   dtos.Text,
-		Author: dtos.Author,
-		Image:  dtos.Image,
+		ID:        uuid.New(),
+		Title:     dtos.Title,
+		Text:      dtos.Text,
+		SubTitle:  dtos.SubTitle,
+		Author:    dtos.Author,
+		Image:     dtos.Image,
+		Like:      0,
+		Create_at: time.Now(),
 	}
 
 	if err := connect.Create(pu.Entity); err != nil {

@@ -60,6 +60,8 @@ func GetAllPublicationHandler(w http.ResponseWriter, r *http.Request) {
 func FindByIdPublicationHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	log.Println(id)
 
 	if id == "" {
